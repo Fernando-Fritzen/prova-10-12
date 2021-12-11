@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import * as C from '../Modal/style';
+import * as S from './style';
 
 function ModalEdit({show, close, produto}) {
 
@@ -104,63 +105,85 @@ function ModalEdit({show, close, produto}) {
         buscarFornecedores();
     },[])
 
+    const [showModalConfirm, setShowModalConfirm] = useState(false);
+    const closeModalConfirm = () => setShowModalConfirm(false);
+
+    function apagarProduto() {
+        axios.delete(`http://localhost:8080/produtos/${produto.id}`)
+            .then(window.location.reload())
+    }
+
   return (
-    <C.Container style={{
-        display: show ? 'flex' : 'none'
-    }}>
-        <div id="modal-container">
-            <div id="fechar" onClick={close}>+</div>
-            <div id="headerModal"><h3>Produtos</h3></div>
+      <>
+        <C.Container style={{
+            display: show ? 'flex' : 'none'
+        }}>
+            <div id="modal-container">
+                <div id="fechar" onClick={close}>+</div>
+                <div id="headerModal"><h3>Produtos</h3></div>
 
-            <form onSubmit={handleSubmit}>
+                <form onSubmit={handleSubmit}>
 
-                <div className="input-produtos">
-                    <label className="input-label">Produto</label>
-                    <input name="nome" onChange={handleChangeNome} value={nome} className="form-produtos" type="text" placeholder="Produto" required="required"/><br/>
-                </div>
-                
-                <div className="input-produtos">
-                    <label className="input-label">Tipo do produto</label>
-                    <select defaultValue={'DEFAULT'} name="tipoProduto" onChange={handleChangeTipoProduto} value={tipoProduto} required="required">
-                        <option selected="selected" value="default">Tipo do produto</option>
-                        {tipoProdutos?.map((item) => (
-                            <option key={item.id} value={item.id}>{item.tipo}</option>
-                        ))}
-                    </select>
-                </div>
+                    <div className="input-produtos">
+                        <label className="input-label">Produto</label>
+                        <input name="nome" onChange={handleChangeNome} value={nome} className="form-produtos" type="text" placeholder="Produto" required="required"/><br/>
+                    </div>
+                    
+                    <div className="input-produtos">
+                        <label className="input-label">Tipo do produto</label>
+                        <select defaultValue={'DEFAULT'} name="tipoProduto" onChange={handleChangeTipoProduto} value={tipoProduto} required="required">
+                            <option selected="selected" value="default">Tipo do produto</option>
+                            {tipoProdutos?.map((item) => (
+                                <option key={item.id} value={item.id}>{item.tipo}</option>
+                            ))}
+                        </select>
+                    </div>
 
-                <div className="input-produtos">
-                    <label className="input-label">Preço de Compra</label>
-                    <input name="precoCompra" onChange={handleChangePrecoCompra} value={precoCompra} className="form-produtos" type="number" placeholder="Preço de Compra" required="required"/><br/>
-                </div>
+                    <div className="input-produtos">
+                        <label className="input-label">Preço de Compra</label>
+                        <input name="precoCompra" onChange={handleChangePrecoCompra} value={precoCompra} className="form-produtos" type="number" placeholder="Preço de Compra" required="required"/><br/>
+                    </div>
 
-                <div className="input-produtos">
-                    <label className="input-label">Preço de venda</label>
-                    <input name="precoVenda" onChange={handleChangePrecoVenda} value={precoVenda} className="form-produtos" type="number" placeholder="Preço de venda" required="required"/>
-                </div>
+                    <div className="input-produtos">
+                        <label className="input-label">Preço de venda</label>
+                        <input name="precoVenda" onChange={handleChangePrecoVenda} value={precoVenda} className="form-produtos" type="number" placeholder="Preço de venda" required="required"/>
+                    </div>
 
-                <div className="input-produtos">
-                    <label className="input-label">Fornecedor</label>
-                    <select defaultValue={'DEFAULT'} name="fornecedor" onChange={handleChangeFornecedor} value={fornecedor} required="required">
-                        <option selected="selected" value="default">Fornecedor</option>
-                        {fornecedores?.map((item) => (
-                            <option key={item.id} value={item.id}>{item.nome}</option>
-                        ))}
-                    </select>
-                </div>
+                    <div className="input-produtos">
+                        <label className="input-label">Fornecedor</label>
+                        <select defaultValue={'DEFAULT'} name="fornecedor" onChange={handleChangeFornecedor} value={fornecedor} required="required">
+                            <option selected="selected" value="default">Fornecedor</option>
+                            {fornecedores?.map((item) => (
+                                <option key={item.id} value={item.id}>{item.nome}</option>
+                            ))}
+                        </select>
+                    </div>
 
-                <div className="input-produtos">
-                    <label className="input-label">Quantidade</label>
-                    <input name="quantidade" onChange={handleChangeQuantidade} value={quantidade} placeholder="Quantidade" />
-                </div>
+                    <div className="input-produtos">
+                        <label className="input-label">Quantidade</label>
+                        <input name="quantidade" onChange={handleChangeQuantidade} value={quantidade} placeholder="Quantidade" />
+                    </div>
 
-                <button type="submit" id="enviarProduto">Editar</button>
+                    <button type="submit" id="enviarProduto">Editar</button>
 
+                </form>
+                <button id="button-delete" onClick={() => setShowModalConfirm(true)}>Apagar</button>
+            </div>
+            <div className="wrapper" />
+        </C.Container>
+        <S.ModalConfirm style={{
+            display: showModalConfirm ? 'flex' : 'none'
+        }}>
+            <div id="modalConfirm">
+                <div id="fechar" onClick={closeModalConfirm}>+</div>
 
-            </form>
-        </div>
-        <div className="wrapper" />
-    </C.Container>
+                <p>Você tem certeza que deseja apagar o <br /> produto "{produto.nome}"</p>
+                <button onClick={() => apagarProduto()}>Sim</button>
+                <button style={{background:'#aaa', marginTop:'10px'}} onClick={closeModalConfirm}>Não</button>
+            </div>
+            <div className="wrapper" />
+        </S.ModalConfirm>
+    </>
   );
 }
 

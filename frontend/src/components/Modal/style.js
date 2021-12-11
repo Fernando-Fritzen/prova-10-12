@@ -80,5 +80,19 @@ export const Container = styled.div`
                 font-size: 20px;
             }
         }
+
+        button#button-delete {
+            position: absolute;
+            right: 30px;
+            bottom: 70px;
+            padding: 10px 20px;
+            height: 50px;
+            background: #ff7e7c;
+            color: #FFF;
+            border: none;
+            border-radius: 10px;
+            font-size: 20px;
+
+        }
     }
 `;
