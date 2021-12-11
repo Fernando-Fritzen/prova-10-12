@@ -1,9 +1,10 @@
-import axios from 'axios';
 import React, { useState, useEffect } from 'react';
-import * as C from './style';
+import axios from 'axios';
+import * as C from '../Modal/style';
 
-function Modal({show, close}) {
+function ModalEdit({show, close, produto}) {
 
+    const [id, setId] = useState(500);
     const [nome , setNome] = useState("");
     const [precoCompra, setPrecoCompra] = useState("");
     const [precoVenda, setPrecoVenda] = useState("");
@@ -12,6 +13,24 @@ function Modal({show, close}) {
     const [quantidade, setQuantidade] = useState("");
     const [tipoProdutos, setTipoProdutos] = useState([]);
     const [fornecedores, setFornecedores] = useState([]);
+
+    if(produto.id && produto.id !== id) {
+        async function buscarProduto(id) {
+            await axios.get(`http://localhost:8080/produtos/${produto.id}`)
+                .then(res => {
+                    setId(res.data.id);
+                    setNome(res.data.nome);
+                    setPrecoCompra(res.data.precoCompra);
+                    setPrecoVenda(res.data.precoVenda);
+                    setTipoProduto(res.data.tipoProduto.id);
+                    setFornecedor(res.data.fornecedor.id);
+                    setQuantidade(res.data.quantidade);
+                    console.log("Produto: " + res.data)
+                })
+        }
+
+        buscarProduto(produto.id);
+    }
 
     function handleSubmit(event) {
         const novoProduto = {
@@ -31,7 +50,7 @@ function Modal({show, close}) {
 
         console.log(novoProduto);
 
-        axios.post('http://localhost:8080/produtos', novoProduto)
+        axios.put(`http://localhost:8080/produtos/${id}`, novoProduto)
             .then(res => {
                 window.location.reload();
             })
@@ -87,8 +106,8 @@ function Modal({show, close}) {
 
   return (
     <C.Container style={{
-            display: show ? 'flex' : 'none'
-        }}>
+        display: show ? 'flex' : 'none'
+    }}>
         <div id="modal-container">
             <div id="fechar" onClick={close}>+</div>
             <div id="headerModal"><h3>Produtos</h3></div>
@@ -135,15 +154,14 @@ function Modal({show, close}) {
                     <input name="quantidade" onChange={handleChangeQuantidade} value={quantidade} placeholder="Quantidade" />
                 </div>
 
-                <button type="submit" id="enviarProduto">Adicionar</button>
+                <button type="submit" id="enviarProduto">Editar</button>
 
 
             </form>
         </div>
         <div className="wrapper" />
-</C.Container>
-
+    </C.Container>
   );
 }
 
-export default Modal;
+export default ModalEdit;

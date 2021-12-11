@@ -1,5 +1,7 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
+import { MdModeEdit, MdDelete, MdClose } from "react-icons/md";
+import ModalEdit from '../ModalEdit';
 import * as C from './style';
 
 // import { Container } from './styles';
@@ -21,6 +23,15 @@ function DataTable() {
 
     },[])
 
+    const [show, setShow] = useState(false);
+    const close = () => setShow(false);
+    const [produtoAtual, setProdutoAtual] = useState([]);
+
+    function handleModalEdit(item) {
+        setShow(true);
+        setProdutoAtual(item);
+    }
+
   return (
       <>
         <C.Table>
@@ -36,7 +47,7 @@ function DataTable() {
             </thead>
             <tbody>
                 {produtos.map((item) => (
-                    <tr key={item.id} >
+                    <tr key={item.id} onClick={() => handleModalEdit(item)} >
                         <td className='left'>{item.nome}</td>
                         <td>{item.tipoProduto.tipo}</td>
                         <td>{item.precoCompra}</td>
@@ -47,6 +58,8 @@ function DataTable() {
                 ))}
             </tbody>
         </C.Table>
+
+        <ModalEdit show={show} close={close} produto={produtoAtual} />
       </>
   );
 }
