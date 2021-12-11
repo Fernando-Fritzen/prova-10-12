@@ -1,20 +1,18 @@
 package com.example.prova.backend.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
 public class Produto implements Serializable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nome;
     private int quantidade;
-    private Double precoVenda;
     private Double precoCompra;
+    private Double precoVenda;
 
     @ManyToOne
     @JoinColumn(name = "tipoProduto_id")
@@ -28,13 +26,28 @@ public class Produto implements Serializable {
 
     }
 
-    public Produto(String nome, int quantidade, Double precoVenda, Double precoCompra, TipoProduto tipoProduto, Fornecedor fornecedor) {
+    public Produto(String nome, int quantidade, Double precoCompra, Double precoVenda, TipoProduto tipoProduto, Fornecedor fornecedor) {
         this.nome = nome;
         this.quantidade = quantidade;
-        this.precoVenda = precoVenda;
         this.precoCompra = precoCompra;
+        this.precoVenda = precoVenda;
         this.tipoProduto = tipoProduto;
         this.fornecedor = fornecedor;
+    }
+
+    public Produto(String nome, int quantidade, Double precoCompra, Double precoVenda) {
+        this.nome = nome;
+        this.quantidade = quantidade;
+        this.precoCompra = precoCompra;
+        this.precoVenda = precoVenda;
+    }
+
+    public Produto(Long id, String nome, int quantidade, Double precoCompra, Double precoVenda) {
+        this.id = id;
+        this.nome = nome;
+        this.quantidade = quantidade;
+        this.precoCompra = precoCompra;
+        this.precoVenda = precoVenda;
     }
 
     public Long getId() {

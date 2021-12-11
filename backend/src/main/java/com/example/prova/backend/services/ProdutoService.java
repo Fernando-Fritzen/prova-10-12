@@ -2,6 +2,7 @@ package com.example.prova.backend.services;
 
 import com.example.prova.backend.model.Produto;
 import com.example.prova.backend.repositories.ProdutoRepository;
+import com.example.prova.backend.services.exceptions.BadRequestException;
 import com.example.prova.backend.services.exceptions.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,6 +29,9 @@ public class ProdutoService {
     }
 
     public Produto insert(Produto produto) {
+        if(produto.getPrecoVenda() < produto.getPrecoCompra()) {
+            throw new BadRequestException("O preço de venda deve ser maior que o de compra");
+        }
         return repository.save(produto);
     }
 

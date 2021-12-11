@@ -2,10 +2,7 @@ package com.example.prova.backend.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +11,7 @@ import java.util.List;
 public class Fornecedor implements Serializable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nome;
     private String telefone;
@@ -25,6 +23,13 @@ public class Fornecedor implements Serializable {
 
     public Fornecedor() {
 
+    }
+
+    public Fornecedor(Long id, String nome, String telefone, String cnpj) {
+        this.id = id;
+        this.nome = nome;
+        this.telefone = telefone;
+        this.cnpj = cnpj;
     }
 
     public Fornecedor(String nome, String telefone, String cnpj) {
