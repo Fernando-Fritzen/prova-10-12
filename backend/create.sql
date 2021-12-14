@@ -1,0 +1,10 @@
+create table fornecedor (id  bigserial not null, cnpj varchar(255), nome varchar(255), telefone varchar(255), primary key (id));
+create table produto (id  bigserial not null, nome varchar(255), preco_compra float8, preco_venda float8, quantidade int4 not null, fornecedor_id int8, tipo_produto_id int8, primary key (id));
+create table tipo_produto (id  bigserial not null, tipo varchar(255), primary key (id));
+alter table if exists produto add constraint FKo6c1dbi17sempey5dpnx6ovrj foreign key (fornecedor_id) references fornecedor;
+alter table if exists produto add constraint FKewk0ju35x8ugkx7sq8cp1uufo foreign key (tipo_produto_id) references tipo_produto;
+create table fornecedor (id  bigserial not null, cnpj varchar(255), nome varchar(255), telefone varchar(255), primary key (id));
+create table produto (id  bigserial not null, nome varchar(255), preco_compra float8, preco_venda float8, quantidade int4 not null, fornecedor_id int8, tipo_produto_id int8, primary key (id));
+create table tipo_produto (id  bigserial not null, tipo varchar(255), primary key (id));
+alter table if exists produto add constraint FKo6c1dbi17sempey5dpnx6ovrj foreign key (fornecedor_id) references fornecedor;
+alter table if exists produto add constraint FKewk0ju35x8ugkx7sq8cp1uufo foreign key (tipo_produto_id) references tipo_produto;

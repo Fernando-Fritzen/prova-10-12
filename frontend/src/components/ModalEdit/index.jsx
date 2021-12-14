@@ -15,7 +15,7 @@ function ModalEdit({show, close, produto}) {
     const [tipoProdutos, setTipoProdutos] = useState([]);
     const [fornecedores, setFornecedores] = useState([]);
 
-    if(produto.id && produto.id !== id) {
+    if(produto && produto.id !== id) {
         async function buscarProduto(id) {
             await axios.get(`http://localhost:8080/produtos/${produto.id}`)
                 .then(res => {
@@ -177,7 +177,7 @@ function ModalEdit({show, close, produto}) {
             <div id="modalConfirm">
                 <div id="fechar" onClick={closeModalConfirm}>+</div>
 
-                <p>Você tem certeza que deseja apagar o <br /> produto "{produto.nome}"</p>
+                <p>Você tem certeza que deseja apagar o <br /> produto "{produto?.nome}"</p>
                 <button onClick={() => apagarProduto()}>Sim</button>
                 <button style={{background:'#aaa', marginTop:'10px'}} onClick={closeModalConfirm}>Não</button>
             </div>
