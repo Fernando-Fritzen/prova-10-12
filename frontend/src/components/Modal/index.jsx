@@ -135,7 +135,7 @@ function Modal({show, close}) {
                     <input name="quantidade" onChange={handleChangeQuantidade} value={quantidade} placeholder="Quantidade" />
                 </div>
 
-                <button type="submit" id="enviarProduto">Adicionar</button>
+                <button className="button-enviar" type="submit" id="enviarProduto">Adicionar</button>
 
 
             </form>

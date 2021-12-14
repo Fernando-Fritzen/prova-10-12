@@ -49,20 +49,20 @@ function ModalFornecedor({show, close}) {
 
                 <div className="input-produtos">
                     <label className="input-label">Fornecedor</label>
-                    <input name="nome" onChange={handleChangeNome} value={nome} className="form-produtos" type="text" placeholder="Fornecedor" required="required"/><br/>
+                    <input data-testid="nome-input" name="nome" onChange={handleChangeNome} value={nome} className="form-produtos" type="text" placeholder="Fornecedor" required="required"/><br/>
                 </div>
                 
                 <div className="input-produtos">
                     <label className="input-label">Telefone</label>
-                    <input name="telefone" onChange={handleChangeTelefone} value={telefone} placeholder="Telefone" />
+                    <input data-testid="telefone-input" name="telefone" onChange={handleChangeTelefone} value={telefone} placeholder="Telefone" />
                 </div>
 
                 <div className="input-produtos">
                     <label className="input-label">CNPJ</label>
-                    <input name="cnpj" onChange={handleChangeCnpj} value={cnpj} placeholder="CNPJ" />
+                    <input data-testid="cnpj-input" name="cnpj" onChange={handleChangeCnpj} value={cnpj} placeholder="CNPJ" />
                 </div>
 
-                <button type="submit" id="enviarProduto">Adicionar</button>
+                <button data-testid="button-add" type="submit" id="enviarProduto">Adicionar</button>
 
 
             </form>
