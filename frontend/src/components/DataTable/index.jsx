@@ -34,7 +34,7 @@ function DataTable() {
 
   return (
       <>
-        <C.Table>
+        <C.Table className="table-produtos">
             <thead>
                 <tr>
                     <th className='left'>Produto</th>
